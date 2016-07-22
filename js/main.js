@@ -3,7 +3,13 @@
 // Global variables
 
 var map; // Holds map object
-var layerList={}; // Object that holds layers for reference
+var layerList = {} // Object that holds layers for reference
+
+// variables for individual layers
+var states
+var usfs
+var fws
+var flh
 
 function initialize(){
 	
@@ -16,9 +22,9 @@ function initialize(){
 	.addTo(map);
 	
 	
-	// Add layers to layerList object and assign short name
+	// Add states to map directly as an individual layer
 	
-	layerList.states = 	L.geoJson.ajax('https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_States_Generalized/FeatureServer/0/query?where=1%3D1&f=geojson&outSR=4326', 
+	states = L.geoJson.ajax('https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_States_Generalized/FeatureServer/0/query?where=1%3D1&f=geojson&outSR=4326', 
 		{
 		style:
 		{
@@ -27,13 +33,64 @@ function initialize(){
 			"weight": 2,
 			"opacity": 0.65	
 		}
-	});
+	}).addTo(map).addEventListener('layeradd',sendStatesBack);
 	
+	// Add other layers to layerList 
 	
+	usfs = L.geoJson.ajax('data/fs-region.geojson', 
+		{
+		style:
+		{
+			"color": "#00ff00",
+			"fill": true,
+			"fillOpacity": 0.1,
+			"weight": 2,
+			"opacity": 1	
+		}
+	});	
+
+	layerList['U.S. Forest Service'] = usfs;
+
+	fws = L.geoJson.ajax('data/fws-region.geojson', 
+		{
+		style:
+		{
+			"color": "#0000ff",
+			"fill": true,
+			"fillOpacity": 0.1,
+			"weight": 2,
+			"opacity": 1	
+		}
+	});	
+
+	layerList['U.S. Fish and Wildlife Service'] = fws;
 	
-	
+	flh = L.geoJson.ajax('data/flh-region.geojson', 
+		{
+		style:
+		{
+			"color": "#ff0000",
+			"fill": true,
+			"fillOpacity": 0.1,
+			"weight": 2,
+			"opacity": 1	
+		}
+	});	
+
+	layerList['Federal Lands Highway'] = flh;
 	
 	// Add default layers to map
-	layerList.states.addTo(map);
+	usfs.addTo(map);
+	L.control.layers([],layerList,{
+		collapsed: false
+	}).addTo(map);
 	
+	usfs.bringToFront();
+	
+}
+
+function sendStatesBack(){
+	if (states != null){
+		states.bringToBack();
+	}
 }
