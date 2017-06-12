@@ -1,66 +1,70 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+	<title>d3.js with leaflet.js</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link
+        rel="stylesheet"
+        href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"
+    />
+    <script src="http://d3js.org/d3.v3.min.js"></script>
 
-	<title>Federal Lands Agency Regions</title>
+    <script
+        src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js">
+    </script>
 
-	<link  rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"> <!--Bootstrap license here: https://github.com/twbs/bootstrap/blob/master/LICENSE !-->
-	<link rel="stylesheet" type="text/css" href="css/leaflet.css"/> <!--Leaflet license here: https://github.com/Leaflet/Leaflet/blob/master/LICENSE !-->
-	<link rel="stylesheet" type="text/css" href="css/regionstyle.css"/>
-
-	<script type="text/javascript" src="js/jquery.min.js"></script> <!--jQuery license here: https://jquery.org/license/ !-->
-	<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script> <!--Bootstrap license here: https://github.com/twbs/bootstrap/blob/master/LICENSE !-->
-	<script type="text/javascript" src="js/leaflet.js"></script> <!--Leaflet license here: https://github.com/Leaflet/Leaflet/blob/master/LICENSE !-->
-	<script type="text/javascript" src="js/leaflet.ajax.min.js"></script> <!--Leaflet-ajax license here: https://github.com/calvinmetcalf/leaflet-ajax/blob/gh-pages/license.md !-->
-	<script type="text/javascript" src="js/main.js"></script>
-	<script type="text/javascript">
-	$(document).ready(function() {
-		initialize();
-	});
-	</script>
 </head>
-
 <body>
-<div class="container-fluid" id="map-container">
-	<div class="row">
-		<div class="col-md-8" id="map-col">
-			<div id="map"></div>
-		</div>
-		<div class="col-md-4">
-			<h2>Interactive Map of Federal Lands Agency Regions</h2>
-			<p>Choose two federal lands agencies to compare their regional boundaries.</p>
-			<p>
-			<h3>Choose two federal lands agencies:</h3>
-			<div class="dropdown">
-				<button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-				National Park Service Regions
-				<span class="caret"></span>
-				</button>
-			<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-				<li><a href="#">U.S. Forest Service Regions</a></li>
-				<li><a href="#">U.S. Fish and Wildlife Service Regions</a></li>
-				<li><a href="#">Federal Lands Highway Divisions</a></li>
-			</ul>
-			</div>
-			<p></p>
-			<div class="dropdown">
-				<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-				U.S. Forest Service Regions
-				<span class="caret"></span>
-				</button>
-			<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-				<li><a href="#">U.S. Forest Service Regions</a></li>
-				<li><a href="#">U.S. Fish and Wildlife Service Regions</a></li>
-				<li><a href="#">Federal Lands Highway Divisions</a></li>
-			</ul>
-			</div>
-			
-		</div>
-	</div>
-</div>
-	
+
+	<div id="map" style="width: 600px; height: 400px"></div>
+
+	<script type="text/javascript">
+
+        var map = L.map('map').setView([-41.2858, 174.7868], 13);
+        mapLink =
+            '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+        L.tileLayer(
+            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; ' + mapLink + ' Contributors',
+            maxZoom: 18,
+            }).addTo(map);
+
+	/* Initialize the SVG layer */
+	map._initPathRoot()
+
+	/* We simply pick up the SVG from the map object */
+	var svg = d3.select("#map").select("svg"),
+	g = svg.append("g");
+
+	d3.json("circles.json", function(collection) {
+		/* Add a LatLng object to each item in the dataset */
+		collection.objects.forEach(function(d) {
+			d.LatLng = new L.LatLng(d.circle.coordinates[0],
+									d.circle.coordinates[1])
+		})
+
+		var feature = g.selectAll("circle")
+			.data(collection.objects)
+			.enter().append("circle")
+			.style("stroke", "black")
+			.style("opacity", .6)
+			.style("fill", "red")
+			.attr("r", 20);
+
+		map.on("viewreset", update);
+		update();
+
+		function update() {
+			feature.attr("transform",
+			function(d) {
+				return "translate("+
+					map.latLngToLayerPoint(d.LatLng).x +","+
+					map.latLngToLayerPoint(d.LatLng).y +")";
+				}
+			)
+		}
+	})
+</script>
 </body>
 </html>
