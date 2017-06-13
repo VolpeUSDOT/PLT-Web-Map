@@ -47,8 +47,9 @@ svg {
         src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js">
     </script>
     <script src = "data/fs_region.js"></script>
-
     <script src = "data/fws_region.js"></script>
+    <script src = "data/flh_region.js"></script>
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
      integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
      crossorigin=""/>
@@ -79,7 +80,7 @@ var fs_layer=L.geoJSON(fs_data, {
     return layer.feature.properties.description;
 }).addTo(map);
 
-//Add FWS layer
+//Add Fish and Wildlife Service (fws) layer
 
 
 var fws_layer=L.geoJSON(fws_data, {
@@ -91,10 +92,23 @@ var fws_layer=L.geoJSON(fws_data, {
       }).addTo(map);
 
 
+//Add Federal Lands Highway (flh) layer
+
+
+var flh_layer=L.geoJSON(flh_data, {
+      style: function (feature) {
+          return {color: 'green'};
+      }
+      }).bindPopup(function (layer) {
+          return layer.feature.properties.description;
+      }).addTo(map);
+
+
 
 var overlayMaps = {
       "Forest Service":fs_layer,
-      "Fish and Wildlife Service":fws_layer
+      "Fish and Wildlife Service":fws_layer,
+      "Federal Lands Highway":flh_layer
 };
 
 L.control.layers(null,overlayMaps).addTo(map);
