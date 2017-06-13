@@ -57,7 +57,7 @@ path:hover {
   var svg = d3.select(map.getPanes().overlayPane).append("svg"),
     g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
-  d3.json("data/flh_region.json", function(error, collection) {
+  d3.json("data/fws_region.json", function(error, collection) {
     if (error) throw error;
 
 
