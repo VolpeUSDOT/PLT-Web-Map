@@ -15,16 +15,21 @@ svg {
   position: relative;
 }
 
-path {
+/*path {
   fill: #000;
   fill-opacity: .2;
   stroke: #fff;
-  stroke-width: 1.5px;
-}
+  stroke-width: 3px;
+}*/
 
-path:hover {
+/*path:hover {
   fill: brown;
   fill-opacity: .7;
+}*/
+
+.fws {
+  fill:purple;
+  stroke: #fff;
 }
 
 </style>
@@ -41,23 +46,67 @@ path:hover {
     <script
         src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js">
     </script>
-  <script type='text/javascript' id='lt_ws' src='http://localhost:5678/socket.io/lighttable/ws.js'></script>
+    <script src = "data/fs_region.js"></script>
+
+    <script src = "data/fws_region.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
+     integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
+     crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"
+     integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg=="
+     crossorigin=""></script>
+
 
 
 
 
 </head>
 <body>
-  <p id="map">
+  <div id="map"></div>
 <script>
   //Using Mike Bostocks example as a guide https://bost.ocks.org/mike/leaflet/
 
-  var map = new L.Map("map", {center: [37.8, -96.9], zoom: 4})
+
+/*   var svg = d3.select(map.getPanes().overlayPane).append("svg"),
+    g = svg.append("g").attr("class", "leaflet-zoom-hide"); */
+
+  //test leaflet layering
+
+var map = new L.Map("map", {center: [37.8, -96.9],
+                            zoom: 4})
     .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
 
-  var svg = d3.select(map.getPanes().overlayPane).append("svg"),
-    g = svg.append("g").attr("class", "leaflet-zoom-hide");
+//Add Forest Service (fs) Layer
+var fs_layer=L.geoJSON(fs_data, {
+    style: function (feature) {
+        return {color: 'blue'};
+    }
+}).bindPopup(function (layer) {
+    return layer.feature.properties.description;
+}).addTo(map);
 
+//Add FWS layer
+
+
+var fws_layer=L.geoJSON(fws_data, {
+      style: function (feature) {
+          return {color: 'red'};
+      }
+      }).bindPopup(function (layer) {
+          return layer.feature.properties.description;
+      }).addTo(map);
+
+
+
+var overlayMaps = {
+      "Forest Service":fs_layer,
+      "Fish and Wildlife Service":fws_layer
+};
+
+L.control.layers(null,overlayMaps).addTo(map);
+
+  //Pull in json data
+/*
   d3.json("data/fws_region.json", function(error, collection) {
     if (error) throw error;
 
@@ -70,9 +119,11 @@ path:hover {
     var transform = d3.geoTransform({point: projectPoint}),
       path = d3.geoPath().projection(transform);
 
-    var feature = g.selectAll("path")
+    var feature = g.selectAll("fws")// make fws instead of path
       .data(collection.features)
-      .enter().append("path");
+      .enter()
+      .append("path")
+      .attr("class","fws"); //test for class addition
 
     map.on("viewreset", reset);
     reset();
@@ -92,9 +143,12 @@ path:hover {
 
     feature.attr("d", path);
     }
+    console.log(collection);
 
 
-  });
+
+
+  }); */
 
 </script>
 </body>
