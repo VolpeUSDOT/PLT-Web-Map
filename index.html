@@ -22,15 +22,15 @@ svg {
   stroke-width: 3px;
 }*/
 
-/*path:hover {
-  fill: brown;
+path:hover {
+  fill: lightgreen;
   fill-opacity: .7;
-}*/
+}
 
-.fws {
+/*.fws {
   fill:purple;
   stroke: #fff;
-}
+}*/
 
 </style>
 
@@ -74,7 +74,7 @@ var map = new L.Map("map", {center: [37.8, -96.9],
 //Add Forest Service (fs) Layer
 var fs_layer=L.geoJSON(fs_data, {
     style: function (feature) {
-        return {color: 'blue',fill:false};
+        return {color: 'darkgreen',fillOpacity:0.2};
     }
 }).bindPopup(function (layer) {
     return layer.feature.properties.description;
@@ -85,7 +85,7 @@ var fs_layer=L.geoJSON(fs_data, {
 
 var fws_layer=L.geoJSON(fws_data, {
       style: function (feature) {
-          return {color: 'red',fill:false};
+          return {color: 'orange',fillOpacity:0.2};
       }
       }).bindPopup(function (layer) {
           return layer.feature.properties.description;
@@ -97,7 +97,7 @@ var fws_layer=L.geoJSON(fws_data, {
 
 var flh_layer=L.geoJSON(flh_data, {
       style: function (feature) {
-          return {color: 'green',fill:false};
+          return {color: 'blue',fillOpacity:0.2};
       }
       }).bindPopup(function (layer) {
           return layer.feature.properties.description;
@@ -112,6 +112,40 @@ var overlayMaps = {
 };
 
 L.control.layers(null,overlayMaps).addTo(map);
+
+  //d3 implementation
+
+  var map = new L.Map("map", {center: [37.8, -96.9], zoom: 4})
+    .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+  var svg = d3.select(map.getPanes().overlayPane).append("svg"),
+    g = svg.append("g").attr("class", "leaflet-zoom-hide");
+  d3.json("data/fws_region.json", function(error, collection) {
+    if (error) throw error;
+    function projectPoint(x, y) {
+      var point = map.latLngToLayerPoint(new L.LatLng(y, x));
+      this.stream.point(point.x, point.y);
+    }
+    var transform = d3.geoTransform({point: projectPoint}),
+      path = d3.geoPath().projection(transform);
+    var feature = g.selectAll("path")
+      .data(collection.features)
+      .enter().append("path");
+    map.on("viewreset", reset);
+    reset();
+  // Reposition the SVG to cover the features.
+    function reset() {
+      var bounds = path.bounds(collection),
+          topLeft = bounds[0],
+          bottomRight = bounds[1];
+      svg .attr("width", bottomRight[0] - topLeft[0])
+          .attr("height", bottomRight[1] - topLeft[1])
+          .style("left", topLeft[0] + "px")
+          .style("top", topLeft[1] + "px");
+      g   .attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
+    feature.attr("d", path);
+    }
+  });
+
 
 
 </script>
