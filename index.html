@@ -118,7 +118,13 @@ var fs_layer=L.geoJSON(fs_data, {
     //console.log("debug")
     //console.log(layer.feature.properties.REGIONNAME)
     return layer.feature.properties.REGIONNAME;
-}).addTo(map);
+})
+.addTo(map);
+
+  //configure popups to disappear on mouseover rather than clicking X
+  fs_layer.on('mouseout', function (e) {
+            this.closePopup();
+        });
 
 
 //Add Fish and Wildlife Service (fws) layer
@@ -132,6 +138,11 @@ var fws_layer=L.geoJSON(fws_data, {
     //console.log(layer.feature.properties.REGNAME)
           return layer.feature.properties.REGNAME;
       }).addTo(map2);
+
+  fws_layer.on('mouseout', function (e) {
+            this.closePopup();
+        });
+
 
 
 //Add Federal Lands Highway (flh) layer
@@ -147,6 +158,9 @@ var flh_layer=L.geoJSON(flh_data, {
           return layer.feature.properties.REGION;
       }).addTo(map3);
 
+flh_layer.on('mouseout', function (e) {
+            this.closePopup();
+        });
 
 
 var overlayMaps = {
