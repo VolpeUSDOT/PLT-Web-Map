@@ -63,13 +63,18 @@ path:hover {
 
 </head>
 <body>
-  <div id="map"></div>
+  <p id="map"></p>
+  <p id="map2"></p>
 <script>
 
 
 var map = new L.Map("map", {center: [37.8, -96.9],
                             zoom: 4})
     .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+
+var map2 = new L.Map("map2", {center: [37.8, -96.9],
+                            zoom: 4});
+
 
 //Add Forest Service (fs) Layer
 var fs_layer=L.geoJSON(fs_data, {
