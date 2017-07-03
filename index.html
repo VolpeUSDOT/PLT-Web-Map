@@ -7,8 +7,22 @@
 
 
 #map {
-  width: 960px;
-  height: 500px;
+  width: 300px;
+  height: 300px;
+}
+  #map2 {
+  width: 300px;
+  height: 300px;
+}
+  #map3 {
+  width: 300px;
+  height: 300px;
+}
+
+
+  #map4 {
+  width: 300px;
+  height: 300px;
 }
 
 svg {
@@ -63,18 +77,35 @@ path:hover {
 
 </head>
 <body>
-  <p id="map"></p>
-  <p id="map2"></p>
+
+
+  <table style="width:100%">
+    <tr>
+    <td><p>USFS</p><p id="map" style="height:300px"></p></td>
+    <td><p>FWS</p><p id="map2" style="height:300px"></p></td>
+    </tr>
+    <tr>
+      <td><p>FLH</p><p id="map3" style="height:300px"></p></td>
+      <td><p>NPS</p><p id="map4" style="height:300px"></p></td>
+    </tr>
+  </table>
 <script>
 
 
 var map = new L.Map("map", {center: [37.8, -96.9],
-                            zoom: 4})
+                            zoom: 3,zoomControl:false})
     .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
 
 var map2 = new L.Map("map2", {center: [37.8, -96.9],
-                            zoom: 4});
+                            zoom: 3}).addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
 
+var map3 = new L.Map("map3", {center: [37.8, -96.9],
+                            zoom: 3})
+    .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+
+var map4 = new L.Map("map4", {center: [37.8, -96.9],
+                            zoom: 3})
+    .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
 
 //Add Forest Service (fs) Layer
 var fs_layer=L.geoJSON(fs_data, {
@@ -94,7 +125,7 @@ var fws_layer=L.geoJSON(fws_data, {
       }
       }).bindPopup(function (layer) {
           return layer.feature.properties.description;
-      }).addTo(map);
+      }).addTo(map2);
 
 
 //Add Federal Lands Highway (flh) layer
@@ -106,7 +137,7 @@ var flh_layer=L.geoJSON(flh_data, {
       }
       }).bindPopup(function (layer) {
           return layer.feature.properties.description;
-      }).addTo(map);
+      }).addTo(map3);
 
 
 
