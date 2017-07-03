@@ -25,6 +25,12 @@
   height: 360px;
 }
 
+  table
+  {
+    table-layout:fixed;
+    width:800px;
+  }
+
 
 
 svg {
@@ -81,7 +87,8 @@ path:hover {
 <body>
 
 
-  <table style="width:50%">
+  <table>
+    <tbody>
     <tr>
     <td><p>USFS</p><p id="map" style="height:300px"></p></td>
     <td><p>FWS</p><p id="map2" style="height:300px"></p></td>
@@ -91,6 +98,7 @@ path:hover {
       <td><p>NPS</p><p id="map4" style="height:300px"></p></td>
     </tr>
   </table>
+  </tbody>
 <script>
 
 //Set starting coordinates and Zooom for all maps
