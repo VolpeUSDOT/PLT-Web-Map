@@ -25,6 +25,8 @@
   height: 300px;
 }
 
+
+
 svg {
   position: relative;
 }
@@ -79,7 +81,7 @@ path:hover {
 <body>
 
 
-  <table style="width:100%">
+  <table style="width:50%">
     <tr>
     <td><p>USFS</p><p id="map" style="height:300px"></p></td>
     <td><p>FWS</p><p id="map2" style="height:300px"></p></td>
@@ -113,18 +115,22 @@ var fs_layer=L.geoJSON(fs_data, {
         return {color: 'darkgreen',fillOpacity:0.2};
     }
 }).bindPopup(function (layer) {
-    return layer.feature.properties.description;
+    //console.log("debug")
+    //console.log(layer.feature.properties.REGIONNAME)
+    return layer.feature.properties.REGIONNAME;
 }).addTo(map);
 
-//Add Fish and Wildlife Service (fws) layer
 
+//Add Fish and Wildlife Service (fws) layer
 
 var fws_layer=L.geoJSON(fws_data, {
       style: function (feature) {
           return {color: 'orange',fillOpacity:0.2};
       }
       }).bindPopup(function (layer) {
-          return layer.feature.properties.description;
+    //console.log("debug")
+    //console.log(layer.feature.properties.REGNAME)
+          return layer.feature.properties.REGNAME;
       }).addTo(map2);
 
 
@@ -136,7 +142,9 @@ var flh_layer=L.geoJSON(flh_data, {
           return {color: 'blue',fillOpacity:0.2};
       }
       }).bindPopup(function (layer) {
-          return layer.feature.properties.description;
+    console.log("debug")
+    console.log(layer.feature.properties.REGION)
+          return layer.feature.properties.REGION;
       }).addTo(map3);
 
 
