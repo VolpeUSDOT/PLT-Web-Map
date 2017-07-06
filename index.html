@@ -71,6 +71,7 @@ path:hover {
     <script src = "data/fs_region.js"></script>
     <script src = "data/fws_region.js"></script>
     <script src = "data/flh_region.js"></script>
+  <script src = "data/nps_region.js"></script>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
      integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
@@ -173,6 +174,24 @@ var flh_layer=L.geoJSON(flh_data, {
 flh_layer.on('mouseout', function (e) {
             this.closePopup();
         });
+
+
+//Add NPS (nps) layer
+
+ var nps_layer=L.geoJSON(nps_data, {
+      style: function (feature) {
+          return {color: 'brown',fillOpacity:0.2,weight:2};
+      }
+      }).bindPopup(function (layer) {
+    //console.log("debug")
+    //console.log(layer.feature.properties.Region)
+          return layer.feature.properties.Region;
+      }).addTo(map4);
+
+  fws_layer.on('mouseout', function (e) {
+            this.closePopup();
+        });
+
 
 
 var overlayMaps = {
