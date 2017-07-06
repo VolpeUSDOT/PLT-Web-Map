@@ -70,7 +70,7 @@ path:hover {
     </script>
     <script src = "data/fs_region.js"></script>
     <script src = "data/fws_region.js"></script>
-    <script src = "data/flh_region.js"></script>
+    <script src = "data/flh_test.js"></script>
   <script src = "data/nps_region.js"></script>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
@@ -95,7 +95,7 @@ path:hover {
     <td><p>FWS</p><p id="map2" style="height:300px"></p></td>
     </tr>
     <tr>
-      <td><p>FLH</p><p id="map3" style="height:300px"></p></td>
+      <td><p></p><p id="map3" style="height:300px"></p></td>
       <td><p>NPS</p><p id="map4" style="height:300px"></p></td>
     </tr>
   </table>
@@ -158,7 +158,7 @@ var fws_layer=L.geoJSON(fws_data, {
 
 
 
-//Add Federal Lands Highway (flh) layer
+//Add Federal Lands Highway () layer
 
 
 var flh_layer=L.geoJSON(flh_data, {
@@ -167,8 +167,9 @@ var flh_layer=L.geoJSON(flh_data, {
       }
       }).bindPopup(function (layer) {
     console.log("debug")
-    console.log(layer.feature.properties.REGION)
-          return layer.feature.properties.REGION;
+    console.log(layer.feature.properties)
+    console.log(flh_data)
+          return layer.feature.properties.Division;
       }).addTo(map3);
 
 flh_layer.on('mouseout', function (e) {
@@ -194,11 +195,11 @@ flh_layer.on('mouseout', function (e) {
 
 
 
-var overlayMaps = {
+/* var overlayMaps = {
       "Forest Service":fs_layer,
       "Fish and Wildlife Service":fws_layer,
-      "Federal Lands Highway":flh_layer
-};
+      "Federal Lands Highway":fhl_layer
+}; */
 
 //Turn on/off Layer button on map
 //L.control.layers(null,overlayMaps).addTo(map);
