@@ -110,18 +110,19 @@ var start_Zoom= 2.5
 var map = new L.Map("map", {center: start_Coord,
                             zoom: start_Zoom,zoomControl:false})
     .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+  map.doubleClickZoom.disable();
 
 var map2 = new L.Map("map2", {center: start_Coord,
-                            zoom: start_Zoom}).addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
-
+                            zoom: start_Zoom,zoomControl:false}).addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+  map2.doubleClickZoom.disable();
 var map3 = new L.Map("map3", {center: start_Coord,
-                            zoom: start_Zoom})
+                            zoom: start_Zoom,zoomControl:false})
     .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
-
+  map3.doubleClickZoom.disable();
 var map4 = new L.Map("map4", {center: start_Coord,
-                            zoom: start_Zoom})
+                            zoom: start_Zoom,zoomControl:false})
     .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
-
+  map4.doubleClickZoom.disable();
 //Add Forest Service (fs) Layer
 var fs_layer=L.geoJSON(fs_data, {
     style: function (feature) {
