@@ -91,12 +91,12 @@ path:hover {
   <table>
     <tbody>
     <tr>
-    <td><p>USFS</p><p id="map" style="height:300px"></p></td>
-    <td><p>FWS</p><p id="map2" style="height:300px"></p></td>
+    <td><p><img src="icons/usfs.png" alt="USFS logo" style="float:left;width:42px;height:42px;">USFS</p><p id="map" style="height:300px"></p></td>
+    <td><p><img src="icons/fws.png" alt="FWS logo" style="float:left;width:38px;height:42px;">FWS</p><p id="map2" style="height:300px"></p></td>
     </tr>
     <tr>
-      <td><p>FLH</p><p id="map3" style="height:300px"></p></td>
-      <td><p>NPS</p><p id="map4" style="height:300px"></p></td>
+      <td><p><img src="icons/flh.png" alt="FLH logo" style="float:left;width:50px;height:42px;">FLH</p><p id="map3" style="height:300px"></p></td>
+      <td><p><img src="icons/nps.svg" alt="NPS logo" style="float:left;width:38px;height:42px;">NPS</p><p id="map4" style="height:300px"></p></td>
     </tr>
   </table>
   </tbody>
@@ -105,6 +105,9 @@ path:hover {
 //Set starting coordinates and Zooom for all maps
 var start_Coord = [37.8, -96.9]
 var start_Zoom= 2.5
+
+//Set border color
+var bord_color = 'white'
 
 
 var map = new L.Map("map", {center: start_Coord,
@@ -126,7 +129,7 @@ var map4 = new L.Map("map4", {center: start_Coord,
 //Add Forest Service (fs) Layer
 var fs_layer=L.geoJSON(fs_data, {
     style: function (feature) {
-        return {color: 'darkgreen',fillOpacity:0.2,weight:2};
+        return {color: bord_color,fillColor:'darkgreen',fillOpacity:0.2,weight:2};
     }
 }).bindPopup(function (layer) {
     //console.log("debug")
@@ -145,7 +148,7 @@ var fs_layer=L.geoJSON(fs_data, {
 
 var fws_layer=L.geoJSON(fws_data, {
       style: function (feature) {
-          return {color: 'orange',fillOpacity:0.2,weight:2};
+          return {color:bord_color,fillColor: 'orange',fillOpacity:0.2,weight:2};
       }
       }).bindPopup(function (layer) {
     //console.log("debug")
@@ -164,7 +167,7 @@ var fws_layer=L.geoJSON(fws_data, {
 
 var flh_layer=L.geoJSON(flh_data, {
       style: function (feature) {
-          return {color: 'blue',fillOpacity:0.2,weight:2};
+          return {color:bord_color,fillColor: 'blue',fillOpacity:0.2,weight:2};
       }
       }).bindPopup(function (layer) {
     console.log("debug")
@@ -182,7 +185,7 @@ flh_layer.on('mouseout', function (e) {
 
  var nps_layer=L.geoJSON(nps_data, {
       style: function (feature) {
-          return {color: '#C56C39',fillOpacity:0.2,weight:2};
+          return {color:bord_color,fillColor: '#C56C39',fillOpacity:0.2,weight:2};
       }
       }).bindPopup(function (layer) {
     //console.log("debug")
