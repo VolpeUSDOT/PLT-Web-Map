@@ -95,7 +95,7 @@ path:hover {
     <td><p>FWS</p><p id="map2" style="height:300px"></p></td>
     </tr>
     <tr>
-      <td><p></p><p id="map3" style="height:300px"></p></td>
+      <td><p>FLH</p><p id="map3" style="height:300px"></p></td>
       <td><p>NPS</p><p id="map4" style="height:300px"></p></td>
     </tr>
   </table>
@@ -189,7 +189,7 @@ flh_layer.on('mouseout', function (e) {
           return layer.feature.properties.Region;
       }).addTo(map4);
 
-  fws_layer.on('mouseout', function (e) {
+  nps_layer.on('mouseout', function (e) {
             this.closePopup();
         });
 
