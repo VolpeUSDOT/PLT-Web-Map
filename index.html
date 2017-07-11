@@ -134,7 +134,7 @@ var map4 = new L.Map("map4", {center: start_Coord,
     .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
   map4.doubleClickZoom.disable();
 //Add Forest Service (fs) Layer
-var fs_layer=L.geoJSON(fs_data, {
+/* var fs_layer=L.geoJSON(fs_data, {
     style: function (feature) {
         return {color: bord_color,fillColor:'darkgreen',fillOpacity:0.2,weight:2};
     }
@@ -148,28 +148,38 @@ var fs_layer=L.geoJSON(fs_data, {
   //configure popups to disappear on mouseover rather than clicking X
   fs_layer.on('mouseout', function (e) {
             this.closePopup();
-        });
+        }); */
+
+var fs_layer = L.geoJson(fs_data, {
+
+        style: function (feature) {
+            return {color:bord_color,fillColor: 'darkgreen',fillOpacity:0.2,weight:2};
+        },
+
+        onEachFeature: function (feature, layer) {
+            layer.bindPopup(feature.properties.REGIONNAME); //This line enables popups on click
+
+            layer.on('mouseover', function (e) {
+                //Popup
+                this.openPopup();
+
+            });
+
+            layer.on('mouseout', function (e) {
+                //Popup
+                this.closePopup()
+
+            });
+        }
+
+    });
+
+fs_layer.addTo(map)
+
 
 
 //Add Fish and Wildlife Service (fws) layer
 
-/* var fws_layer=L.geoJSON(fws_data, {
-      style: function (feature) {
-          return {color:bord_color,fillColor: 'orange',fillOpacity:0.2,weight:2};
-      }
-      }).bindPopup(function (layer) {
-    //console.log("debug")
-    //console.log(layer.feature.properties.REGNAME)
-          return layer.feature.properties.REGNAME;
-      }).addTo(map2);
-
-  fws_layer.on('mouseover', function (e) {
-            this.openPopup();
-        });
-
-  fws_layer.on('mouseout', function (e) {
-            this.closePopup();
-        }); */
 
 var fws_layer = L.geoJson(fws_data, {
 
