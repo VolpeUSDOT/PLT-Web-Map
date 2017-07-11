@@ -153,7 +153,7 @@ var fs_layer=L.geoJSON(fs_data, {
 
 //Add Fish and Wildlife Service (fws) layer
 
-var fws_layer=L.geoJSON(fws_data, {
+/* var fws_layer=L.geoJSON(fws_data, {
       style: function (feature) {
           return {color:bord_color,fillColor: 'orange',fillOpacity:0.2,weight:2};
       }
@@ -163,11 +163,39 @@ var fws_layer=L.geoJSON(fws_data, {
           return layer.feature.properties.REGNAME;
       }).addTo(map2);
 
-  fws_layer.on('mouseout', function (e) {
-            this.closePopup();
+  fws_layer.on('mouseover', function (e) {
+            this.openPopup();
         });
 
+  fws_layer.on('mouseout', function (e) {
+            this.closePopup();
+        }); */
 
+var fws_layer = L.geoJson(fws_data, {
+
+        style: function (feature) {
+            return {color:bord_color,fillColor: 'orange',fillOpacity:0.2,weight:2};
+        },
+
+        onEachFeature: function (feature, layer) {
+            layer.bindPopup(feature.properties.REGNAME); //This line enables popups on click
+
+            layer.on('mouseover', function (e) {
+                //Popup
+                this.openPopup();
+
+            });
+
+            layer.on('mouseout', function (e) {
+                //Popup
+                this.closePopup()
+
+            });
+        }
+
+    });
+
+fws_layer.addTo(map2)
 
 //Add Federal Lands Highway () layer
 
