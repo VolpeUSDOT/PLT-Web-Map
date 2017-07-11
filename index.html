@@ -196,20 +196,6 @@ fws_layer.addTo(map2)
 //Add Federal Lands Highway () layer
 
 
-/* var flh_layer=L.geoJSON(flh_data, {
-      style: function (feature) {
-          return {color:bord_color,fillColor: 'blue',fillOpacity:0.2,weight:2};
-      }
-      }).bindPopup(function (layer) {
-    console.log("debug")
-    console.log(layer.feature.properties)
-    console.log(flh_data)
-          return layer.feature.properties.Division;
-      }).addTo(map3);
-
-flh_layer.on('mouseout', function (e) {
-            this.closePopup();
-        }); */
 
 var flh_layer = L.geoJson(flh_data, {
 
@@ -240,7 +226,7 @@ flh_layer.addTo(map3)
 
 //Add NPS (nps) layer
 
- var nps_layer=L.geoJSON(nps_data, {
+/*  var nps_layer=L.geoJSON(nps_data, {
       style: function (feature) {
           return {color:bord_color,fillColor: '#C56C39',fillOpacity:0.2,weight:2};
       }
@@ -252,9 +238,33 @@ flh_layer.addTo(map3)
 
   nps_layer.on('mouseout', function (e) {
             this.closePopup();
-        });
+        }); */
 
+var nps_layer = L.geoJson(nps_data, {
 
+        style: function (feature) {
+            return {color:bord_color,fillColor: '#C56C39',fillOpacity:0.2,weight:2};
+        },
+
+        onEachFeature: function (feature, layer) {
+            layer.bindPopup(feature.properties.Region); //This line enables popups on click
+
+            layer.on('mouseover', function (e) {
+                //Popup
+                this.openPopup();
+
+            });
+
+            layer.on('mouseout', function (e) {
+                //Popup
+                this.closePopup()
+
+            });
+        }
+
+    });
+
+  nps_layer.addTo(map4)
 
 /* var overlayMaps = {
       "Forest Service":fs_layer,
