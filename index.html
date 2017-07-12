@@ -176,7 +176,7 @@ var fws_layer = L.geoJson(fws_data, {
 
          onEachFeature: function (feature, layer) {
             var popup_fws = L.popup({autoPan:false})
-              .setLatLng(L.latLng(50.5, 30.5))
+              .setLatLng(L.latLng(50.5, 30.5)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
               .setContent(feature.properties.REGNAME)
               .openOn(map2);
 
@@ -207,7 +207,7 @@ fws_layer.addTo(map2);
 
 //Add Federal Lands Highway () layer
 
-
+//TODO fix placement of popup
 
 var flh_layer = L.geoJson(flh_data, {
 
@@ -216,7 +216,12 @@ var flh_layer = L.geoJson(flh_data, {
         },
 
         onEachFeature: function (feature, layer) {
-            layer.bindPopup(feature.properties.Division); //This line enables popups on click
+            var popup_flh = L.popup({autoPan:false})
+              .setLatLng(L.latLng(50.5, 30.5)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
+              .setContent(feature.properties.Division)
+              .openOn(map3);
+
+            layer.bindPopup(popup_flh); //This line enables popups on click
 
             layer.on('mouseover', function (e) {
                 //Popup
@@ -237,20 +242,7 @@ flh_layer.addTo(map3)
 
 
 //Add NPS (nps) layer
-
-/*  var nps_layer=L.geoJSON(nps_data, {
-      style: function (feature) {
-          return {color:bord_color,fillColor: '#C56C39',fillOpacity:0.2,weight:2};
-      }
-      }).bindPopup(function (layer) {
-    //console.log("debug")
-    //console.log(layer.feature.properties.Region)
-          return layer.feature.properties.Region;
-      }).addTo(map4);
-
-  nps_layer.on('mouseout', function (e) {
-            this.closePopup();
-        }); */
+//TODO fix placement of popup. Check out methods
 
 var nps_layer = L.geoJson(nps_data, {
 
@@ -258,10 +250,18 @@ var nps_layer = L.geoJson(nps_data, {
             return {color:bord_color,fillColor: '#C56C39',fillOpacity:0.2,weight:2};
         },
 
-        onEachFeature: function (feature, layer) {
-            layer.bindPopup(feature.properties.Region); //This line enables popups on click
+
+         onEachFeature: function (feature, layer) {
+            var popup_nps = L.popup({autoPan:false})
+              .setLatLng(L.latLng(50.5,30)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
+              .setContent(feature.properties.Region)
+              .openOn(map4);
+
+            layer.bindPopup(popup_nps); //This line enables popups on click
 
             layer.on('mouseover', function (e) {
+              //debug
+              console.log(layer.feature.geometry.coordinates)
                 //Popup
                 this.openPopup();
 
