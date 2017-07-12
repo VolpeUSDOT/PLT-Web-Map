@@ -143,6 +143,7 @@ var fs_layer = L.geoJson(fs_data, {
         },
 
         onEachFeature: function (feature, layer) {
+
             layer.bindPopup(feature.properties.REGIONNAME); //This line enables popups on click
 
             layer.on('mouseover', function (e) {
@@ -160,7 +161,7 @@ var fs_layer = L.geoJson(fs_data, {
 
     });
 
-fs_layer.addTo(map)
+fs_layer.addTo(map);
 
 
 
@@ -173,8 +174,13 @@ var fws_layer = L.geoJson(fws_data, {
             return {color:bord_color,fillColor: 'orange',fillOpacity:0.2,weight:2};
         },
 
-        onEachFeature: function (feature, layer) {
-            layer.bindPopup(feature.properties.REGNAME); //This line enables popups on click
+         onEachFeature: function (feature, layer) {
+            var popup_fws = L.popup({autoPan:false})
+              .setLatLng(L.latLng(50.5, 30.5))
+              .setContent(feature.properties.REGNAME)
+              .openOn(map2);
+
+            layer.bindPopup(popup_fws); //This line enables popups on click
 
             layer.on('mouseover', function (e) {
                 //Popup
@@ -189,9 +195,15 @@ var fws_layer = L.geoJson(fws_data, {
             });
         }
 
-    });
 
-fws_layer.addTo(map2)
+   });
+
+fws_layer.addTo(map2);
+
+
+
+
+
 
 //Add Federal Lands Highway () layer
 
