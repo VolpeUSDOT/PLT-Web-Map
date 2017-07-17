@@ -78,7 +78,8 @@ path:hover {
     <script src = "data/fs_region.js"></script>
     <script src = "data/fws_region.js"></script>
     <script src = "data/flh_test.js"></script>
-  <script src = "data/nps_region.js"></script>
+    <script src = "data/nps_region.js"></script>
+  <script src = "js/regionFinder.js"></script>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
      integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
@@ -177,12 +178,15 @@ var fws_layer = L.geoJson(fws_data, {
          onEachFeature: function (feature, layer) {
             var popup_fws = L.popup({autoPan:false})
               .setLatLng(L.latLng(50.5, 30.5)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
-              .setContent(feature.properties.REGNAME)
+            .setContent(feature.properties.REGNAME + "<br>"+fwsFinder(feature.properties.REGNAME))
               .openOn(map2);
 
             layer.bindPopup(popup_fws); //This line enables popups on click
 
             layer.on('mouseover', function (e) {
+              //debug
+              console.log(layer.feature)
+
                 //Popup
                 this.openPopup();
 
@@ -261,7 +265,7 @@ var nps_layer = L.geoJson(nps_data, {
 
             layer.on('mouseover', function (e) {
               //debug
-              console.log(layer.feature.geometry.coordinates)
+              //console.log(layer.feature)
                 //Popup
                 this.openPopup();
 
