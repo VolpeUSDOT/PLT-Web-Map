@@ -212,6 +212,7 @@ var fws_layer = L.geoJson(fws_data, {
               console.log(layer.feature)
 
                 //Popup
+
                 this.openPopup();
 
             });
@@ -253,6 +254,7 @@ var flh_layer = L.geoJson(flh_data, {
 
             layer.on('mouseover', function (e) {
                 //Popup
+                //popup_flh.setLatLng(L.latLng(49.38, -66.94))
                 this.openPopup();
 
             });
