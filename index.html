@@ -273,6 +273,7 @@ flh_layer.addTo(map3)
 
 //Add NPS (nps) layer
 //TODO fix placement of popup. Check out methods
+//check this out https://stackoverflow.com/questions/18980397/leaflet-update-marker-getlatlng
 
 var nps_layer = L.geoJson(nps_data, {
 
@@ -291,7 +292,10 @@ var nps_layer = L.geoJson(nps_data, {
 
             layer.on('mouseover', function (e) {
               //debug
-              //console.log(layer.feature)
+              //popup_nps.setLatLng(L.latLng(50.5,30))
+              console.log(layer.feature)
+              console.log("LatLng")
+              console.log(popup_nps.getLatLng())
                 //Popup
                 this.openPopup();
 
