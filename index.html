@@ -79,7 +79,8 @@ path:hover {
     <script src = "data/fws_region.js"></script>
     <script src = "data/flh_test.js"></script>
     <script src = "data/nps_region.js"></script>
-  <script src = "js/regionFinder.js"></script>
+    <script src = "js/regionFinder.js"></script>
+    <script src = "data/states.js"></script>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
      integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
@@ -115,7 +116,7 @@ var start_Coord = [37.8, -96.9]
 var start_Zoom= 2.5
 
 //Set border color
-var bord_color = 	"darkgrey"
+var bord_color = 	"white"
 
 
 var map = new L.Map("map", {center: start_Coord,
@@ -134,6 +135,21 @@ var map4 = new L.Map("map4", {center: start_Coord,
                             zoom: start_Zoom,zoomControl:false})
     .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
   map4.doubleClickZoom.disable();
+
+//Create States layer
+
+var states = L.geoJson(states,{
+
+        style: function (feature) {
+            return {color:"lightgrey",fillOpacity:0.2,weight:0.5};
+        }});
+
+states.addTo(map)
+states.addTo(map2)
+states.addTo(map3)
+states.addTo(map4)
+
+
 //Add Forest Service (fs) Layer
 
 
