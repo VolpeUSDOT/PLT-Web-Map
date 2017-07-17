@@ -42,3 +42,50 @@ var reg_num
   }
   return reg_num;
 }
+
+
+//For USFS
+function fsFinder(regionName){
+var reg_num
+
+  switch(regionName){
+    case "Northern":
+      reg_num = "R1";
+      break;
+
+    case "Rocky Mountain":
+      reg_num = "R2";
+      break;
+
+    case "Southwestern":
+      reg_num = "R3";
+      break;
+
+    case "Intermountain":
+      reg_num = "R4";
+      break;
+
+    case "Pacific Southwest":
+      reg_num = "R5";
+      break;
+
+    case "Pacific Northwest":
+      reg_num = "R6";
+      break;
+
+    case "Southern":
+      reg_num = "R8";
+      break;
+
+    case "Eastern":
+      reg_num = "R9";
+      break;
+
+    case "Alaska":
+      reg_num = "R10";
+      break;
+  }
+
+
+  return reg_num;
+}

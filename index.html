@@ -115,7 +115,7 @@ var start_Coord = [37.8, -96.9]
 var start_Zoom= 2.5
 
 //Set border color
-var bord_color = 'white'
+var bord_color = 	"darkgrey"
 
 
 var map = new L.Map("map", {center: start_Coord,
@@ -145,9 +145,17 @@ var fs_layer = L.geoJson(fs_data, {
 
         onEachFeature: function (feature, layer) {
 
-            layer.bindPopup(feature.properties.REGIONNAME); //This line enables popups on click
+             var popup_fs = L.popup({autoPan:false})
+              .setLatLng(L.latLng(50.5, 30.5)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
+            .setContent(feature.properties.REGIONNAME + "<br>"+fsFinder(feature.properties.REGIONNAME))
+              .openOn(map);
+
+            layer.bindPopup(popup_fs); //This line enables popups on click
 
             layer.on('mouseover', function (e) {
+              //debug
+              console.log(layer.feature)
+
                 //Popup
                 this.openPopup();
 
@@ -178,7 +186,7 @@ var fws_layer = L.geoJson(fws_data, {
          onEachFeature: function (feature, layer) {
             var popup_fws = L.popup({autoPan:false})
               .setLatLng(L.latLng(50.5, 30.5)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
-            .setContent(feature.properties.REGNAME + "<br>"+fwsFinder(feature.properties.REGNAME))
+            .setContent(feature.properties.REGNAME + "<br>"+"Region "+fwsFinder(feature.properties.REGNAME))
               .openOn(map2);
 
             layer.bindPopup(popup_fws); //This line enables popups on click
