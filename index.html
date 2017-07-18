@@ -236,6 +236,34 @@ fws_layer.addTo(map2);
 
 //Add Federal Lands Highway () layer
 
+//Determine popup placment
+
+function flh_placement(division){
+var LatLng
+
+  switch(division){
+
+    case "Western":
+      LatLng = L.latLng(45.58329, -114.78516);
+      break;
+
+    case "Central":
+      LatLng = L.latLng(36.87962, -105.82031);
+      break;
+
+    case "Eastern":
+      LatLng = L.latLng(35.17381, -84.42969);
+      break;
+
+
+  }
+
+
+  return LatLng;
+};
+
+
+
 //TODO fix placement of popup
 
 var flh_layer = L.geoJson(flh_data, {
@@ -255,9 +283,14 @@ var flh_layer = L.geoJson(flh_data, {
             layer.on('mouseover', function (e) {
                 //Popup
                 //popup_flh.setLatLng(L.latLng(49.38, -66.94))
-                this.openPopup(e.latlng); //places popup in location inside ()
+                this.openPopup(flh_placement(feature.properties.Division)); //places popup in location inside ()
 
             });
+
+          /*layer.on('click', function (e) {
+                //Popup
+                console.log(feature.properties.Division + e.latlng)
+        });*/
 
             layer.on('mouseout', function (e) {
                 //Popup
@@ -275,7 +308,7 @@ flh_layer.addTo(map3)
 //TODO fix placement of popup. Check out methods
 //check this out https://stackoverflow.com/questions/18980397/leaflet-update-marker-getlatlng
 
-function nps_Placement(regionName){
+function nps_placement(regionName){
 var LatLng
 
   switch(regionName){
@@ -329,7 +362,7 @@ var nps_layer = L.geoJson(nps_data, {
             layer.on('mouseover', function (e) {
               //popup_nps.setLatLng(e.latlng);
               //this.openPopup(e.latlng); //places popup in the location in the ()
-              this.openPopup(nps_Placement(feature.properties.Region));
+              this.openPopup(nps_placement(feature.properties.Region));
             });
 
             layer.bindPopup(popup_nps); //This line enables popups on click
@@ -339,10 +372,11 @@ var nps_layer = L.geoJson(nps_data, {
                 this.closePopup()
 
             });
-           layer.on('click', function (e) {
+           //debug
+           /* layer.on('click', function (e) {
                 //Popup
                 console.log(feature.properties.Region + e.latlng)
-        });
+        }); */
     }});
 
   nps_layer.addTo(map4)
