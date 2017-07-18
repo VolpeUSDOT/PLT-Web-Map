@@ -1,66 +1,437 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
+<style>
+
+@import url(//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.css);
+
+
+#map {
+  width: 360px;
+  height: 360px;
+}
+  #map2 {
+  width: 360px;
+  height: 360px;
+}
+  #map3 {
+  width: 360px;
+  height:360px;
+}
+
+
+  #map4 {
+  width: 360px;
+  height: 360px;
+}
+
+  table
+  {
+    table-layout:fixed;
+    width:800px;
+  }
+
+p
+{
+   font-size: 20px;
+   font-family: Arial;
+  font-weight:bold
+}
+
+
+
+svg {
+  position: relative;
+}
+
+/*path {
+  fill: #000;
+  fill-opacity: .2;
+  stroke: #fff;
+  stroke-width: 3px;
+}*/
+
+path:hover {
+  fill: lightgrey;
+  fill-opacity: .7;
+}
+
+/*.fws {
+  fill:purple;
+  stroke: #fff;
+}*/
+
+</style>
+
 <head>
+	<title>Region Comparison</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link
+        rel="stylesheet"
+        href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"
+    />
+    <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
 
-	<title>Federal Lands Agency Regions</title>
+    <script
+        src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js">
+    </script>
+    <script src = "data/fs_region.js"></script>
+    <script src = "data/fws_region.js"></script>
+    <script src = "data/flh_test.js"></script>
+    <script src = "data/nps_region.js"></script>
+    <script src = "js/regionFinder.js"></script>
+    <script src = "data/states.js"></script>
 
-	<link  rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"> <!--Bootstrap license here: https://github.com/twbs/bootstrap/blob/master/LICENSE !-->
-	<link rel="stylesheet" type="text/css" href="css/leaflet.css"/> <!--Leaflet license here: https://github.com/Leaflet/Leaflet/blob/master/LICENSE !-->
-	<link rel="stylesheet" type="text/css" href="css/regionstyle.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
+     integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
+     crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"
+     integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg=="
+     crossorigin=""></script>
 
-	<script type="text/javascript" src="js/jquery.min.js"></script> <!--jQuery license here: https://jquery.org/license/ !-->
-	<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script> <!--Bootstrap license here: https://github.com/twbs/bootstrap/blob/master/LICENSE !-->
-	<script type="text/javascript" src="js/leaflet.js"></script> <!--Leaflet license here: https://github.com/Leaflet/Leaflet/blob/master/LICENSE !-->
-	<script type="text/javascript" src="js/leaflet.ajax.min.js"></script> <!--Leaflet-ajax license here: https://github.com/calvinmetcalf/leaflet-ajax/blob/gh-pages/license.md !-->
-	<script type="text/javascript" src="js/main.js"></script>
-	<script type="text/javascript">
-	$(document).ready(function() {
-		initialize();
-	});
-	</script>
+
+
+
+
 </head>
-
 <body>
-<div class="container-fluid" id="map-container">
-	<div class="row">
-		<div class="col-md-8" id="map-col">
-			<div id="map"></div>
-		</div>
-		<div class="col-md-4">
-			<h2>Interactive Map of Federal Lands Agency Regions</h2>
-			<p>Choose two federal lands agencies to compare their regional boundaries.</p>
-			<p>
-			<h3>Choose two federal lands agencies:</h3>
-			<div class="dropdown">
-				<button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-				National Park Service Regions
-				<span class="caret"></span>
-				</button>
-			<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-				<li><a href="#">U.S. Forest Service Regions</a></li>
-				<li><a href="#">U.S. Fish and Wildlife Service Regions</a></li>
-				<li><a href="#">Federal Lands Highway Divisions</a></li>
-			</ul>
-			</div>
-			<p></p>
-			<div class="dropdown">
-				<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-				U.S. Forest Service Regions
-				<span class="caret"></span>
-				</button>
-			<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-				<li><a href="#">U.S. Forest Service Regions</a></li>
-				<li><a href="#">U.S. Fish and Wildlife Service Regions</a></li>
-				<li><a href="#">Federal Lands Highway Divisions</a></li>
-			</ul>
-			</div>
-			
-		</div>
-	</div>
-</div>
-	
+
+
+  <table>
+    <tbody>
+    <tr>
+      <td><p><img src="icons/usfs.png" alt="USFS logo" style="float:left;width:42px;height:42px;padding: 0px 40px 10px 0px;"></p><p style="padding: 10px 0px 0px 0px;">U.S. Forest Service</p><p id="map" style="height:300px"></p></td>
+    <td><p><img src="icons/fws.png" alt="FWS logo" style="float:left;width:38px;height:42px;padding: 0px 30px 10px 0px;"></p><p style="padding: 10px 0px 0px 0px;">U.S. Fish and Wildlife Service</p><p id="map2" style="height:300px"></p></td>
+    </tr>
+    <tr>
+      <td><p><img src="icons/flh.png" alt="FLH logo" style="float:left;width:50px;height:42px;padding: 0px 2px 10px 0px;"></p><p style="padding: 10px 0px 0px 0px;">Office of Federal Lands Highway</p><p id="map3" style="height:300px"></p></td>
+      <td><p><img src="icons/nps.svg" alt="NPS logo" style="float:left;width:38px;height:42px;padding: 0px 40px 10px 0px;"></p><p style="padding: 10px 0px 0px 0px;">National Park Service</p><p id="map4" style="height:300px"></p></td>
+    </tr>
+  </table>
+  </tbody>
+<script>
+
+//Set starting coordinates and Zooom for all maps
+var start_Coord = [37.8, -96.9]
+var start_Zoom= 2.5
+
+//Set border color
+var bord_color = 	"white"
+
+
+var map = new L.Map("map", {center: start_Coord,
+                            zoom: start_Zoom,zoomControl:false})
+    .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+  map.doubleClickZoom.disable();
+
+var map2 = new L.Map("map2", {center: start_Coord,
+                            zoom: start_Zoom,zoomControl:false}).addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+  map2.doubleClickZoom.disable();
+var map3 = new L.Map("map3", {center: start_Coord,
+                            zoom: start_Zoom,zoomControl:false})
+    .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+  map3.doubleClickZoom.disable();
+var map4 = new L.Map("map4", {center: start_Coord,
+                            zoom: start_Zoom,zoomControl:false})
+    .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+  map4.doubleClickZoom.disable();
+
+//Create States layer
+
+var states = L.geoJson(states,{
+
+        style: function (feature) {
+            return {color:"lightgrey",fillOpacity:0.2,weight:0.5};
+        }});
+
+states.addTo(map)
+states.addTo(map2)
+states.addTo(map3)
+states.addTo(map4)
+
+
+//Add Forest Service (fs) Layer
+
+
+var fs_layer = L.geoJson(fs_data, {
+
+        style: function (feature) {
+            return {color:bord_color,fillColor: 'darkgreen',fillOpacity:0.2,weight:2};
+        },
+
+        onEachFeature: function (feature, layer) {
+
+             var popup_fs = L.popup({autoPan:false})
+              .setLatLng(L.latLng(50.5, 30.5)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
+            .setContent(feature.properties.REGIONNAME + "<br>"+fsFinder(feature.properties.REGIONNAME))
+              .openOn(map);
+
+            layer.bindPopup(popup_fs); //This line enables popups on click
+
+            layer.on('mouseover', function (e) {
+              //debug
+              console.log(layer.feature)
+
+                //Popup
+                this.openPopup();
+
+            });
+
+            layer.on('mouseout', function (e) {
+                //Popup
+                this.closePopup()
+
+            });
+        }
+
+    });
+
+fs_layer.addTo(map);
+
+
+
+//Add Fish and Wildlife Service (fws) layer
+
+
+var fws_layer = L.geoJson(fws_data, {
+
+        style: function (feature) {
+            return {color:bord_color,fillColor: 'orange',fillOpacity:0.2,weight:2};
+        },
+
+         onEachFeature: function (feature, layer) {
+            var popup_fws = L.popup({autoPan:false})
+              .setLatLng(L.latLng(50.5, 30.5)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
+            .setContent(feature.properties.REGNAME + "<br>"+"Region "+fwsFinder(feature.properties.REGNAME))
+              .openOn(map2);
+
+            layer.bindPopup(popup_fws); //This line enables popups on click
+
+            layer.on('mouseover', function (e) {
+              //debug
+              console.log(layer.feature)
+
+                //Popup
+
+                this.openPopup();
+
+            });
+
+            layer.on('mouseout', function (e) {
+                //Popup
+                this.closePopup()
+
+            });
+        }
+
+
+   });
+
+fws_layer.addTo(map2);
+
+
+
+
+
+
+//Add Federal Lands Highway () layer
+
+//Determine popup placment
+
+function flh_placement(division){
+var LatLng
+
+  switch(division){
+
+    case "Western":
+      LatLng = L.latLng(45.58329, -114.78516);
+      break;
+
+    case "Central":
+      LatLng = L.latLng(36.87962, -105.82031);
+      break;
+
+    case "Eastern":
+      LatLng = L.latLng(35.17381, -84.42969);
+      break;
+
+
+  }
+
+
+  return LatLng;
+};
+
+
+
+//TODO fix placement of popup
+
+var flh_layer = L.geoJson(flh_data, {
+
+        style: function (feature) {
+            return {color:bord_color,fillColor: 'blue',fillOpacity:0.2,weight:2};
+        },
+
+        onEachFeature: function (feature, layer) {
+            var popup_flh = L.popup({autoPan:false})
+              .setLatLng(L.latLng(50.5, 30.5)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
+              .setContent(feature.properties.Division)
+              .openOn(map3);
+
+            layer.bindPopup(popup_flh); //This line enables popups on click
+
+            layer.on('mouseover', function (e) {
+                //Popup
+                //popup_flh.setLatLng(L.latLng(49.38, -66.94))
+                this.openPopup(flh_placement(feature.properties.Division)); //places popup in location inside ()
+
+            });
+
+          /*layer.on('click', function (e) {
+                //Popup
+                console.log(feature.properties.Division + e.latlng)
+        });*/
+
+            layer.on('mouseout', function (e) {
+                //Popup
+                this.closePopup()
+
+            });
+        }
+
+    });
+
+flh_layer.addTo(map3)
+
+
+//Add NPS (nps) layer
+//TODO fix placement of popup. Check out methods
+//check this out https://stackoverflow.com/questions/18980397/leaflet-update-marker-getlatlng
+
+function nps_placement(regionName){
+var LatLng
+
+  switch(regionName){
+    case "Pacific West":
+      LatLng = L.latLng(40.84706, -118.30078);
+      break;
+
+    case "Intermountain":
+      LatLng = L.latLng(36.45664, -106.52344);
+      break;
+
+    case "Midwest":
+      LatLng = L.latLng(41.37681, -96.50391);
+      break;
+
+    case "Southeast":
+      LatLng = L.latLng(33.43144, -81.5625);
+      break;
+
+    case "Northeast":
+      LatLng = L.latLng(38.13456, -78.92578);
+      break;
+
+    case "National Capital":
+      LatLng = L.latLng(38.82259, -76.64062);
+      break;
+
+    case "Alaska":
+      LatLng = L.latLng(64.62388, -154.33594);
+      break;
+
+  }
+
+
+  return LatLng;
+};
+
+
+var nps_layer = L.geoJson(nps_data, {
+
+        style: function (feature) {
+            return {color:bord_color,fillColor: '#C56C39',fillOpacity:0.2,weight:2};
+        },
+
+
+          onEachFeature: function (feature, layer) {
+            var popup_nps = L.popup({autoPan:false})
+              .setLatLng(L.latLng(50.5, 30.5)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
+              .setContent(feature.properties.Region)
+              .openOn(map4);
+
+            layer.bindPopup(popup_nps); //This line enables popups on click
+
+            layer.on('mouseover', function (e) {
+                //Popup
+                //popup_nps.setLatLng(L.latLng(49.38, -66.94))
+                this.openPopup(nps_placement(feature.properties.Region)); //places popup in location inside ()
+
+            });
+
+          /*layer.on('click', function (e) {
+                //Popup
+                console.log(feature.properties.Division + e.latlng)
+        });*/
+
+            layer.on('mouseout', function (e) {
+                //Popup
+                this.closePopup()
+
+            });
+        }
+
+    });
+
+  nps_layer.addTo(map4)
+
+/* var overlayMaps = {
+      "Forest Service":fs_layer,
+      "Fish and Wildlife Service":fws_layer,
+      "Federal Lands Highway":fhl_layer
+}; */
+
+//Turn on/off Layer button on map
+//L.control.layers(null,overlayMaps).addTo(map);
+
+/*   //d3 implementation
+
+  var map5 = new L.Map("map", {center: [37.8, -96.9], zoom: 4})
+    .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+
+  //So I think this is why this works. Need to investigate
+
+  var svg = d3.select(map5.getPanes().overlayPane).append("svg"),
+    g = svg.append("g").attr("class", "leaflet-zoom-hide");
+  d3.json("data/fws_region.json", function(error, collection) {
+    if (error) throw error;
+    function projectPoint(x, y) {
+      var point = map5.latLngToLayerPoint(new L.LatLng(y, x));
+      this.stream.point(point.x, point.y);
+    }
+    var transform = d3.geoTransform({point: projectPoint}),
+      path = d3.geoPath().projection(transform);
+    var feature = g.selectAll("path")
+      .data(collection.features)
+      .enter().append("path");
+    map5.on("viewreset", reset);
+    reset();
+  // Reposition the SVG to cover the features.
+    function reset() {
+      var bounds = path.bounds(collection),
+          topLeft = bounds[0],
+          bottomRight = bounds[1];
+      svg .attr("width", bottomRight[0] - topLeft[0])
+          .attr("height", bottomRight[1] - topLeft[1])
+          .style("left", topLeft[0] + "px")
+          .style("top", topLeft[1] + "px");
+      g   .attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
+    feature.attr("d", path);
+    }
+  }); */
+
+
+
+</script>
 </body>
 </html>
