@@ -41,7 +41,7 @@ var reg_num
       break;
   }
   return reg_num;
-}
+};
 
 
 //For USFS
@@ -88,4 +88,44 @@ var reg_num
 
 
   return reg_num;
-}
+};
+
+//NPS needs nondefault centroids. This function produces them for display
+
+function nps_Placement(regionName){
+var LatLng
+
+  switch(regionName){
+    case "Pacific West":
+      LatLng = L.latLng(40.84706, -118.30078);
+      break;
+
+    case "Intermountain":
+      LatLng = L.latLng(36.45664, -106.52344);
+      break;
+
+    case "Midwest":
+      LatLng = L.latLng(41.37681, -96.50391);
+      break;
+
+    case "Southeast":
+      LatLng = L.latLng(33.43144, -81.5625);
+      break;
+
+    case "Northeast":
+      LatLng = L.latLng(38.13456, -78.92578);
+      break;
+
+    case "National Capital":
+      LatLng = L.latLng(38.82259, -76.64062);
+      break;
+
+    case "Alaska":
+      LatLng = L.latLng(64.62388, -154.33594);
+      break;
+
+  }
+
+
+  return LatLng;
+};

@@ -255,7 +255,7 @@ var flh_layer = L.geoJson(flh_data, {
             layer.on('mouseover', function (e) {
                 //Popup
                 //popup_flh.setLatLng(L.latLng(49.38, -66.94))
-                this.openPopup();
+                this.openPopup(e.latlng); //places popup in location inside ()
 
             });
 
@@ -275,6 +275,45 @@ flh_layer.addTo(map3)
 //TODO fix placement of popup. Check out methods
 //check this out https://stackoverflow.com/questions/18980397/leaflet-update-marker-getlatlng
 
+function nps_Placement(regionName){
+var LatLng
+
+  switch(regionName){
+    case "Pacific West":
+      LatLng = L.latLng(40.84706, -118.30078);
+      break;
+
+    case "Intermountain":
+      LatLng = L.latLng(36.45664, -106.52344);
+      break;
+
+    case "Midwest":
+      LatLng = L.latLng(41.37681, -96.50391);
+      break;
+
+    case "Southeast":
+      LatLng = L.latLng(33.43144, -81.5625);
+      break;
+
+    case "Northeast":
+      LatLng = L.latLng(38.13456, -78.92578);
+      break;
+
+    case "National Capital":
+      LatLng = L.latLng(38.82259, -76.64062);
+      break;
+
+    case "Alaska":
+      LatLng = L.latLng(64.62388, -154.33594);
+      break;
+
+  }
+
+
+  return LatLng;
+};
+
+
 var nps_layer = L.geoJson(nps_data, {
 
         style: function (feature) {
@@ -289,7 +328,8 @@ var nps_layer = L.geoJson(nps_data, {
               .openOn(map4);
             layer.on('mouseover', function (e) {
               //popup_nps.setLatLng(e.latlng);
-              this.openPopup(e.latlng);
+              //this.openPopup(e.latlng); //places popup in the location in the ()
+              this.openPopup(nps_Placement(feature.properties.Region));
             });
 
             layer.bindPopup(popup_nps); //This line enables popups on click
@@ -299,9 +339,11 @@ var nps_layer = L.geoJson(nps_data, {
                 this.closePopup()
 
             });
-        }
-
-    });
+           layer.on('click', function (e) {
+                //Popup
+                console.log(feature.properties.Region + e.latlng)
+        });
+    }});
 
   nps_layer.addTo(map4)
 
