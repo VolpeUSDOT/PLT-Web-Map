@@ -284,22 +284,15 @@ var nps_layer = L.geoJson(nps_data, {
 
          onEachFeature: function (feature, layer) {
             var popup_nps = L.popup({autoPan:false})
-              .setLatLng(L.latLng(50.5,30)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
+              .setLatLng(L.latLng(41,-82.9)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
               .setContent(feature.properties.Region)
               .openOn(map4);
+            layer.on('mouseover', function (e) {
+              //popup_nps.setLatLng(e.latlng);
+              this.openPopup(e.latlng);
+            });
 
             layer.bindPopup(popup_nps); //This line enables popups on click
-
-            layer.on('mouseover', function (e) {
-              //debug
-              //popup_nps.setLatLng(L.latLng(50.5,30))
-              console.log(layer.feature)
-              console.log("LatLng")
-              console.log(popup_nps.getLatLng())
-                //Popup
-                this.openPopup();
-
-            });
 
             layer.on('mouseout', function (e) {
                 //Popup
