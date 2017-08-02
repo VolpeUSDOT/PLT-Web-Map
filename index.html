@@ -564,7 +564,52 @@ L.geoJSON(nps_office_locations, {
 	}).addTo(map4);
 
 
+//USACE
 
+ //Determine locations for popup
+
+function usace_placement(regionName){
+var LatLng
+
+  switch(regionName){
+    case "Southwestern Division":
+      LatLng = L.latLng(34.45222, -99.66797);
+      break;
+
+    case "Northwestern Division":
+      LatLng = L.latLng(45.8288, -109.33594);
+      break;
+
+    case "Mississippi Valley Division":
+      LatLng = L.latLng(41.90228, -92.10938);
+      break;
+
+    case "Great Lakes and Ohio River Division":
+      LatLng = L.latLng(39.90974, -84.19922);
+      break;
+
+    case "North Atlantic Division":
+      LatLng = L.latLng(40.44695, -76.46484);
+      break;
+
+    case "South Atlantic Division":
+      LatLng = L.latLng(32.39852, -82.61719);
+      break;
+
+    case "South Pacific Division":
+      LatLng = L.latLng(37.30028, -110.21484);
+      break;
+
+    case "Pacific Ocean":
+      LatLng = L.latLng(65.73063, -149.58984);
+      break;
+
+
+  }
+
+
+  return LatLng;
+};
 
 
 
@@ -590,9 +635,14 @@ var usace_layer = L.geoJson(usace_data, {
               //console.log(layer.feature)
 
                 //Popup
-                this.openPopup();
+                this.openPopup(usace_placement(feature.properties.DIVISION));
 
             });
+
+          layer.on('click', function (e) {
+                //Popup
+                console.log(feature.properties.DIVISION + e.latlng)
+        });
 
             layer.on('mouseout', function (e) {
                 //Popup
@@ -717,10 +767,10 @@ var blm_layer = L.geoJson(blm_data, {
 
             });
 
-          layer.on('click', function (e) {
+          //layer.on('click', function (e) {
                 //Popup
-                console.log(feature.properties.REGION + e.latlng)
-        });
+                //console.log(feature.properties.REGION + e.latlng)
+       // });
 
             layer.on('mouseout', function (e) {
                 //Popup
