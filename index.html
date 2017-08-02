@@ -99,6 +99,8 @@ path:hover {
     <script src = "data/usfs_offices.js"></script>
     <script src = "data/fws_offices.js"></script>
     <script src = "data/fhl_offices.js"></script>
+    <script src = "data/usace_offices.js"></script>
+    <script src = "data/blm_offices.js"></script>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
      integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
@@ -603,6 +605,31 @@ var usace_layer = L.geoJson(usace_data, {
 
 usace_layer.addTo(map5);
 
+//add USACE office locations
+
+
+
+L.geoJSON(usace_office_locations, {
+
+		style: function (feature) {
+			return feature.properties && feature.properties.style;
+		},
+
+
+
+		pointToLayer: function (feature, latlng) {
+			return L.circleMarker(latlng, {
+				radius: 5,
+				fillColor: "#EE3B33",
+				color: "#EE3B33",
+				weight: 1,
+				opacity: 1,
+				fillOpacity: 0.8
+			});
+		}
+	}).addTo(map5);
+
+
 //Add BLM layer
 
 var blm_layer = L.geoJson(blm_data, {
@@ -640,7 +667,29 @@ var blm_layer = L.geoJson(blm_data, {
 
 blm_layer.addTo(map6);
 
+//add BLM office locations
 
+
+
+L.geoJSON(blm_office_locations, {
+
+		style: function (feature) {
+			return feature.properties && feature.properties.style;
+		},
+
+
+
+		pointToLayer: function (feature, latlng) {
+			return L.circleMarker(latlng, {
+				radius: 5,
+				fillColor: "#60BBDE",
+				color: "#60BBDE",
+				weight: 1,
+				opacity: 1,
+				fillOpacity: 0.8
+			});
+		}
+	}).addTo(map6);
 
 </script>
 </body>
