@@ -639,10 +639,10 @@ var usace_layer = L.geoJson(usace_data, {
 
             });
 
-          layer.on('click', function (e) {
+          //layer.on('click', function (e) {
                 //Popup
-                console.log(feature.properties.DIVISION + e.latlng)
-        });
+                //console.log(feature.properties.DIVISION + e.latlng)
+        //});
 
             layer.on('mouseout', function (e) {
                 //Popup
@@ -699,7 +699,7 @@ var LatLng
       LatLng = L.latLng(41.64008, -99.31641);
       break;
 
-    case "Montana":
+    case "Montana-Dakotas":
       LatLng = L.latLng(47.15984, -103.35938);
       break;
 
@@ -723,13 +723,11 @@ var LatLng
       LatLng = L.latLng(44.08759, -114.25781);
       break;
 
-    case "Oregon":
+    case "Oregon-Washington":
       LatLng = L.latLng(43.70759, -120.58594);
       break;
 
-    case "Washington":
-      LatLng = L.latLng(47.15984, -119.88281);
-      break;
+
 
     case "Alaska":
       LatLng = L.latLng(66.0622, -151.97379);
