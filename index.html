@@ -80,11 +80,13 @@ path:hover {
         rel="stylesheet"
         href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"
     />
-    <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+
 
     <script
         src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js">
     </script>
+
+
     <script src = "data/fs_region.js"></script>
     <script src = "data/fws_region.js"></script>
     <script src = "data/flh_test.js"></script>
@@ -92,7 +94,9 @@ path:hover {
     <script src = "js/regionFinder.js"></script>
     <script src = "data/states.js"></script>
     <script src = "data/blm_region.js"></script>
-
+    <script src = "data/usace_region.js"></script>
+    <script src = "data/nps_offices.js"></script>
+    <script src = "data/usfs_offices.js"></script>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
      integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
@@ -206,6 +210,16 @@ var states = L.geoJson(states,{
             return {color:"lightgrey",fillOpacity:0.2,weight:0.5};
         }});
 
+var geojsonMarkerOptions = {
+    radius: 8,
+    fillColor: "#ff7800",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+
 
 
 
@@ -219,7 +233,7 @@ var states = L.geoJson(states,{
 var fs_layer = L.geoJson(fs_data, {
 
         style: function (feature) {
-            return {color:bord_color,fillColor: 'darkgreen',fillOpacity:0.2,weight:2};
+            return {color:bord_color,fillColor: '#006225',fillOpacity:0.2,weight:2};
         },
 
         onEachFeature: function (feature, layer) {
@@ -251,6 +265,30 @@ var fs_layer = L.geoJson(fs_data, {
 
 fs_layer.addTo(map);
 
+
+//add USFS office locations
+
+
+
+L.geoJSON(usfs_office_locations, {
+
+		style: function (feature) {
+			return feature.properties && feature.properties.style;
+		},
+
+
+
+		pointToLayer: function (feature, latlng) {
+			return L.circleMarker(latlng, {
+				radius: 5,
+				fillColor: "#006225",
+				color: "#006225",
+				weight: 1,
+				opacity: 1,
+				fillOpacity: 0.8
+			});
+		}
+	}).addTo(map);
 
 
 //Add Fish and Wildlife Service (fws) layer
@@ -448,12 +486,79 @@ var nps_layer = L.geoJson(nps_data, {
 
   nps_layer.addTo(map4)
 
+
+//add NPS office locations
+
+
+
+L.geoJSON(nps_office_locations, {
+
+		style: function (feature) {
+			return feature.properties && feature.properties.style;
+		},
+
+
+
+		pointToLayer: function (feature, latlng) {
+			return L.circleMarker(latlng, {
+				radius: 5,
+				fillColor: "#C56C39",
+				color: "#C56C39",
+				weight: 1,
+				opacity: 1,
+				fillOpacity: 0.8
+			});
+		}
+	}).addTo(map4);
+
+
+
+
+
+
+//Add USACE layer
+
+var usace_layer = L.geoJson(usace_data, {
+
+        style: function (feature) {
+            return {color:bord_color,fillColor: '#EE3B33',fillOpacity:0.2,weight:2};
+        },
+
+        onEachFeature: function (feature, layer) {
+
+             var popup_usace = L.popup({autoPan:false})
+              .setLatLng(L.latLng(50.5, 30.5)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
+            .setContent(feature.properties.DIVISION)
+              .openOn(map5);
+
+            layer.bindPopup(popup_usace); //This line enables popups on click
+
+            layer.on('mouseover', function (e) {
+              //debug
+              //console.log(layer.feature)
+
+                //Popup
+                this.openPopup();
+
+            });
+
+            layer.on('mouseout', function (e) {
+                //Popup
+                this.closePopup()
+
+            });
+        }
+
+    });
+
+usace_layer.addTo(map5);
+
 //Add BLM layer
 
 var blm_layer = L.geoJson(blm_data, {
 
         style: function (feature) {
-            return {color:bord_color,fillColor: 'darkgreen',fillOpacity:0.2,weight:2};
+            return {color:bord_color,fillColor: '#60BBDE',fillOpacity:0.2,weight:2};
         },
 
         onEachFeature: function (feature, layer) {
