@@ -630,31 +630,97 @@ L.geoJSON(usace_office_locations, {
 	}).addTo(map5);
 
 
-//Add BLM layer
+//BLM
+//Determine locations for popup
+
+function blm_placement(regionName){
+var LatLng
+
+  switch(regionName){
+    case "Eastern States":
+      LatLng = L.latLng(36.87962, -86.83594);
+      break;
+
+    case "New Mexico":
+      LatLng = L.latLng(34.74161, -99.84375);
+      break;
+
+    case "Wyoming":
+      LatLng = L.latLng(41.64008, -99.31641);
+      break;
+
+    case "Montana":
+      LatLng = L.latLng(47.15984, -103.35938);
+      break;
+
+    case "Arizona":
+      LatLng = L.latLng(34.74161, -111.26953);
+      break;
+
+    case "Utah":
+      LatLng = L.latLng(39.23225, -111.26953);
+      break;
+
+    case "California":
+      LatLng = L.latLng(36.73888, -119.70703);
+      break;
+
+    case "Nevada":
+      LatLng = L.latLng(39.77477, -116.54297);
+      break;
+
+    case "Idaho":
+      LatLng = L.latLng(44.08759, -114.25781);
+      break;
+
+    case "Oregon":
+      LatLng = L.latLng(43.70759, -120.58594);
+      break;
+
+    case "Washington":
+      LatLng = L.latLng(47.15984, -119.88281);
+      break;
+
+    case "Alaska":
+      LatLng = L.latLng(66.0622, -151.97379);
+      break;
+
+  }
+
+
+  return LatLng;
+};
+
+
+
+
+  //Add BLM layer
 
 var blm_layer = L.geoJson(blm_data, {
 
         style: function (feature) {
-            return {color:bord_color,fillColor: '#60BBDE',fillOpacity:0.2,weight:2};
+            return {color:bord_color,fillColor: 'blue',fillOpacity:0.2,weight:2};
         },
 
-        onEachFeature: function (feature, layer) {
-
-             var popup_blm = L.popup({autoPan:false})
+         onEachFeature: function (feature, layer) {
+            var popup_blm = L.popup({autoPan:false})
               .setLatLng(L.latLng(50.5, 30.5)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
-            .setContent(feature.properties.REGION)
+              .setContent(feature.properties.REGION)
               .openOn(map6);
 
             layer.bindPopup(popup_blm); //This line enables popups on click
 
             layer.on('mouseover', function (e) {
-              //debug
-              //console.log(layer.feature)
-
                 //Popup
-                this.openPopup();
+                //popup_blm.setLatLng(L.latLng(49.38, -66.94))
+                this.openPopup(blm_placement(feature.properties.REGION)); //places popup in location inside ()
 
             });
+
+          layer.on('click', function (e) {
+                //Popup
+                console.log(feature.properties.REGION + e.latlng)
+        });
 
             layer.on('mouseout', function (e) {
                 //Popup
