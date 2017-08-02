@@ -98,7 +98,7 @@ path:hover {
     <script src = "data/nps_offices.js"></script>
     <script src = "data/usfs_offices.js"></script>
     <script src = "data/fws_offices.js"></script>
-    <script src = "data/fhl_offices.js"></script>
+    <script src = "data/flh_offices.js"></script>
     <script src = "data/usace_offices.js"></script>
     <script src = "data/blm_offices.js"></script>
 
@@ -436,7 +436,7 @@ flh_layer.addTo(map3)
 
 
 
-L.geoJSON(fhl_office_locations, {
+L.geoJSON(flh_office_locations, {
 
 		style: function (feature) {
 			return feature.properties && feature.properties.style;
@@ -699,7 +699,7 @@ var LatLng
 var blm_layer = L.geoJson(blm_data, {
 
         style: function (feature) {
-            return {color:bord_color,fillColor: 'blue',fillOpacity:0.2,weight:2};
+            return {color:bord_color,fillColor: '#6FC6F4',fillOpacity:0.2,weight:2};
         },
 
          onEachFeature: function (feature, layer) {
@@ -748,8 +748,8 @@ L.geoJSON(blm_office_locations, {
 		pointToLayer: function (feature, latlng) {
 			return L.circleMarker(latlng, {
 				radius: 5,
-				fillColor: "#60BBDE",
-				color: "#60BBDE",
+				fillColor: "#6FC6F4",
+				color: "#6FC6F4",
 				weight: 1,
 				opacity: 1,
 				fillOpacity: 0.8
