@@ -572,31 +572,31 @@ function usace_placement(regionName){
 var LatLng
 
   switch(regionName){
-    case "Southwestern Division":
+    case "Southwestern":
       LatLng = L.latLng(34.45222, -99.66797);
       break;
 
-    case "Northwestern Division":
+    case "Northwestern":
       LatLng = L.latLng(45.8288, -109.33594);
       break;
 
-    case "Mississippi Valley Division":
+    case "Mississippi Valley":
       LatLng = L.latLng(41.90228, -92.10938);
       break;
 
-    case "Great Lakes and Ohio River Division":
+    case "Great Lakes and Ohio River":
       LatLng = L.latLng(39.90974, -84.19922);
       break;
 
-    case "North Atlantic Division":
+    case "North Atlantic":
       LatLng = L.latLng(40.44695, -76.46484);
       break;
 
-    case "South Atlantic Division":
-      LatLng = L.latLng(32.39852, -82.61719);
+    case "South Atlantic":
+      LatLng = L.latLng(32.24997, -82.08984);
       break;
 
-    case "South Pacific Division":
+    case "South Pacific":
       LatLng = L.latLng(37.30028, -110.21484);
       break;
 
@@ -639,10 +639,10 @@ var usace_layer = L.geoJson(usace_data, {
 
             });
 
-          //layer.on('click', function (e) {
+          layer.on('click', function (e) {
                 //Popup
-                //console.log(feature.properties.DIVISION + e.latlng)
-        //});
+                console.log(feature.properties.DIVISION + e.latlng)
+        });
 
             layer.on('mouseout', function (e) {
                 //Popup
