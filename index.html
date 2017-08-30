@@ -244,7 +244,7 @@ var fs_layer = L.geoJson(fs_data, {
 
              var popup_fs = L.popup({autoPan:false})
               .setLatLng(L.latLng(50.5, 30.5)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
-            .setContent(feature.properties.REGIONNAME + "<br>"+fsFinder(feature.properties.REGIONNAME))
+            .setContent("<b>"+feature.properties.REGIONNAME+"</b>" + " ("+fsFinder(feature.properties.REGIONNAME)+")" + "<br>" + fs_FOFinder(feature.properties.REGIONNAME))
               .openOn(map);
 
             layer.bindPopup(popup_fs); //This line enables popups on click
@@ -307,7 +307,7 @@ var fws_layer = L.geoJson(fws_data, {
          onEachFeature: function (feature, layer) {
             var popup_fws = L.popup({autoPan:false})
               .setLatLng(L.latLng(50.5, 30.5)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
-            .setContent(feature.properties.REGNAME + "<br>"+"Region "+fwsFinder(feature.properties.REGNAME))
+            .setContent("<b>"+feature.properties.REGNAME+"</b>" + " ("+"Region "+fwsFinder(feature.properties.REGNAME)+")"+"<br>"+fws_FOFinder(feature.properties.REGNAME))
               .openOn(map2);
 
             layer.bindPopup(popup_fws); //This line enables popups on click
@@ -360,31 +360,7 @@ L.geoJSON(fws_office_locations, {
 
 //Add Federal Lands Highway () layer
 
-//Determine popup placment
 
-function flh_placement(division){
-var LatLng
-
-  switch(division){
-
-    case "Western":
-      LatLng = L.latLng(45.58329, -114.78516);
-      break;
-
-    case "Central":
-      LatLng = L.latLng(36.87962, -105.82031);
-      break;
-
-    case "Eastern":
-      LatLng = L.latLng(35.17381, -84.42969);
-      break;
-
-
-  }
-
-
-  return LatLng;
-};
 
 
 
@@ -399,7 +375,7 @@ var flh_layer = L.geoJson(flh_data, {
         onEachFeature: function (feature, layer) {
             var popup_flh = L.popup({autoPan:false})
               .setLatLng(L.latLng(50.5, 30.5)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
-              .setContent(feature.properties.Division)
+              .setContent("<b>"+feature.properties.Division+"</b>" + "<br>"+ flh_FOFinder(feature.properties.Division))
               .openOn(map3);
 
             layer.bindPopup(popup_flh); //This line enables popups on click
@@ -456,43 +432,7 @@ L.geoJSON(flh_office_locations, {
 //TODO fix placement of popup. Check out methods
 //check this out https://stackoverflow.com/questions/18980397/leaflet-update-marker-getlatlng
 
-function nps_placement(regionName){
-var LatLng
 
-  switch(regionName){
-    case "Pacific West":
-      LatLng = L.latLng(40.84706, -118.30078);
-      break;
-
-    case "Intermountain":
-      LatLng = L.latLng(36.45664, -106.52344);
-      break;
-
-    case "Midwest":
-      LatLng = L.latLng(41.37681, -96.50391);
-      break;
-
-    case "Southeast":
-      LatLng = L.latLng(33.43144, -81.5625);
-      break;
-
-    case "Northeast":
-      LatLng = L.latLng(38.13456, -78.92578);
-      break;
-
-    case "National Capital":
-      LatLng = L.latLng(38.82259, -76.64062);
-      break;
-
-    case "Alaska":
-      LatLng = L.latLng(64.62388, -154.33594);
-      break;
-
-  }
-
-
-  return LatLng;
-};
 
 
 var nps_layer = L.geoJson(nps_data, {
@@ -505,7 +445,7 @@ var nps_layer = L.geoJson(nps_data, {
           onEachFeature: function (feature, layer) {
             var popup_nps = L.popup({autoPan:false})
               .setLatLng(L.latLng(50.5, 30.5)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
-              .setContent(feature.properties.Region)
+              .setContent("<b>"+feature.properties.Region+"</b>"+"</br>"+nps_FOFinder(feature.properties.Region))
               .openOn(map4);
 
             layer.bindPopup(popup_nps); //This line enables popups on click
@@ -557,48 +497,7 @@ L.geoJSON(nps_office_locations, {
 
  //Determine locations for popup
 
-function usace_placement(regionName){
-var LatLng
 
-  switch(regionName){
-    case "Southwestern Division":
-      LatLng = L.latLng(34.45222, -99.66797);
-      break;
-
-    case "Northwestern Division":
-      LatLng = L.latLng(45.8288, -109.33594);
-      break;
-
-    case "Mississippi Valley Division":
-      LatLng = L.latLng(41.90228, -92.10938);
-      break;
-
-    case "Great Lakes and Ohio River Division":
-      LatLng = L.latLng(39.90974, -84.19922);
-      break;
-
-    case "North Atlantic Division":
-      LatLng = L.latLng(40.44695, -76.46484);
-      break;
-
-    case "South Atlantic Division":
-      LatLng = L.latLng(32.39852, -82.61719);
-      break;
-
-    case "South Pacific Division":
-      LatLng = L.latLng(37.30028, -110.21484);
-      break;
-
-    case "Pacific Ocean":
-      LatLng = L.latLng(65.73063, -149.58984);
-      break;
-
-
-  }
-
-
-  return LatLng;
-};
 
 
 
@@ -614,7 +513,7 @@ var usace_layer = L.geoJson(usace_data, {
 
              var popup_usace = L.popup({autoPan:false})
               .setLatLng(L.latLng(50.5, 30.5)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
-            .setContent(feature.properties.DIVISION)
+            .setContent("<b>"+feature.properties.DIVISION+"</b>"+"<br>"+ usace_FOFinder(feature.properties.DIVISION))
               .openOn(map5);
 
             layer.bindPopup(popup_usace); //This line enables popups on click
@@ -625,7 +524,6 @@ var usace_layer = L.geoJson(usace_data, {
                 this.openPopup(usace_placement(feature.properties.DIVISION));
 
             });
-
 
             layer.on('mouseout', function (e) {
                 //Popup
@@ -664,63 +562,7 @@ L.geoJSON(usace_office_locations, {
 
 
 //BLM
-//Determine locations for popup
 
-function blm_placement(regionName){
-var LatLng
-
-  switch(regionName){
-    case "Eastern States":
-      LatLng = L.latLng(36.87962, -86.83594);
-      break;
-
-    case "New Mexico":
-      LatLng = L.latLng(34.74161, -99.84375);
-      break;
-
-    case "Wyoming":
-      LatLng = L.latLng(41.64008, -99.31641);
-      break;
-
-    case "Montana-Dakotas":
-      LatLng = L.latLng(47.15984, -103.35938);
-      break;
-
-    case "Arizona":
-      LatLng = L.latLng(34.74161, -111.26953);
-      break;
-
-    case "Utah":
-      LatLng = L.latLng(39.23225, -111.26953);
-      break;
-
-    case "California":
-      LatLng = L.latLng(36.73888, -119.70703);
-      break;
-
-    case "Nevada":
-      LatLng = L.latLng(39.77477, -116.54297);
-      break;
-
-    case "Idaho":
-      LatLng = L.latLng(44.08759, -114.25781);
-      break;
-
-    case "Oregon-Washington":
-      LatLng = L.latLng(43.70759, -120.58594);
-      break;
-
-
-
-    case "Alaska":
-      LatLng = L.latLng(66.0622, -151.97379);
-      break;
-
-  }
-
-
-  return LatLng;
-};
 
 
 
@@ -736,7 +578,7 @@ var blm_layer = L.geoJson(blm_data, {
          onEachFeature: function (feature, layer) {
             var popup_blm = L.popup({autoPan:false})
               .setLatLng(L.latLng(50.5, 30.5)) //any LatLng will suffice, just need an entry here to workaround Leaflt bug
-              .setContent(feature.properties.REGION)
+              .setContent("<b>"+feature.properties.REGION+"</b>" + "<br>" + blm_FO_Finder(feature.properties.REGION))
               .openOn(map6);
 
             layer.bindPopup(popup_blm); //This line enables popups on click
