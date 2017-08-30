@@ -6,6 +6,7 @@
 
 
 
+
 #map {
   width: 360px;
   height: 360px;
@@ -73,17 +74,32 @@ path:hover {
 
 </style>
 
+
+
+<header>
+
+<div id="logo-sitename" class="clearfix">
+     <a id="home-page-logo_desktop" aria-hidden="true" href="/"
+title="Home" rel="home" id="logo"><img
+ src="icons/Volpe.jpg" style="width:150px"
+ alt="Volpe the National Transportation Systems Center."></img></a>
+
+ </header>
+
+
+
+
 <head>
 	<title>Federal Lands Agency Regional Comparison Map</title>
 
     <link
         rel="stylesheet"
-        href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"
+        href="https://cdn.leafletjs.com/leaflet-0.7/leaflet.css"
     />
 
 
     <script
-        src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js">
+        src="https://cdn.leafletjs.com/leaflet-0.7/leaflet.js">
     </script>
 
 
@@ -111,13 +127,10 @@ path:hover {
 
 
 
-
-
 </head>
 <body>
-
-
-  <table>
+<p>
+<table>
     <tbody>
     <tr>
       <td><p><img src="icons/usfs.png" alt="USFS logo" style="float:left;width:42px;height:42px;padding: 0px 40px 10px 0px;"></p><p style="padding: 10px 0px 0px 0px;">U.S. Forest Service</p><p id="map" style="height:300px"></p></td>
@@ -132,6 +145,7 @@ path:hover {
       <td><p><img src="icons/blm.png" alt="NPS logo" style="float:left;width:42px;height:42px;padding: 0px 20px 15px 0px;"></p><p style="padding: 10px 0px 0px 0px;">Bureau of Land Managment</p><p id="map6" style="height:300px"></p></td>
     </tr>
   </table>
+</p>
   </tbody>
 <script>
 
