@@ -74,7 +74,7 @@ path:hover {
 </style>
 
 <head>
-	<title>Region Comparison</title>
+	<title>Federal Lands Agency Regional Comparison Map</title>
 
     <link
         rel="stylesheet"
@@ -313,17 +313,12 @@ var fws_layer = L.geoJson(fws_data, {
             layer.bindPopup(popup_fws); //This line enables popups on click
 
             layer.on('mouseover', function (e) {
-              //debug
-              //console.log(layer.feature)
-
-                //Popup
 
                 this.openPopup();
 
             });
 
             layer.on('mouseout', function (e) {
-                //Popup
                 this.closePopup()
 
             });
@@ -432,7 +427,7 @@ var flh_layer = L.geoJson(flh_data, {
 
 flh_layer.addTo(map3)
 
-//add OFHL office locations
+//add FLH office locations
 
 
 
@@ -516,16 +511,10 @@ var nps_layer = L.geoJson(nps_data, {
             layer.bindPopup(popup_nps); //This line enables popups on click
 
             layer.on('mouseover', function (e) {
-                //Popup
-                //popup_nps.setLatLng(L.latLng(49.38, -66.94))
                 this.openPopup(nps_placement(feature.properties.Region)); //places popup in location inside ()
 
             });
 
-          /*layer.on('click', function (e) {
-                //Popup
-                console.log(feature.properties.Division + e.latlng)
-        });*/
 
             layer.on('mouseout', function (e) {
                 //Popup
@@ -631,18 +620,12 @@ var usace_layer = L.geoJson(usace_data, {
             layer.bindPopup(popup_usace); //This line enables popups on click
 
             layer.on('mouseover', function (e) {
-              //debug
-              //console.log(layer.feature)
 
                 //Popup
                 this.openPopup(usace_placement(feature.properties.DIVISION));
 
             });
 
-          //layer.on('click', function (e) {
-                //Popup
-                //console.log(feature.properties.DIVISION + e.latlng)
-        //});
 
             layer.on('mouseout', function (e) {
                 //Popup
@@ -760,15 +743,10 @@ var blm_layer = L.geoJson(blm_data, {
 
             layer.on('mouseover', function (e) {
                 //Popup
-                //popup_blm.setLatLng(L.latLng(49.38, -66.94))
                 this.openPopup(blm_placement(feature.properties.REGION)); //places popup in location inside ()
 
             });
 
-          //layer.on('click', function (e) {
-                //Popup
-                //console.log(feature.properties.REGION + e.latlng)
-       // });
 
             layer.on('mouseout', function (e) {
                 //Popup
