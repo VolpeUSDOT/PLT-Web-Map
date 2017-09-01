@@ -3,9 +3,21 @@
 <html>
 <style>
 
-header{
+header {
+    position: relative;
+    color: #fff;
+    z-index: 9999;
+
+    height:90px;
+    background-image: -ms-linear-gradient(top,#64a1d2 17%,#266092 100%);
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiP…B3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(17%,#64a1d2),color-stop(100%,#266092));
+    background: -moz-linear-gradient(top,#64a1d2 17%,#266092 100%);
+    background: -webkit-linear-gradient(top,#64a1d2 17%,#266092 100%);
     background: linear-gradient(to bottom,#64a1d2 17%,#266092 100%);
-}
+  }
+
+
 
 
 
@@ -38,10 +50,23 @@ header{
   height: 360px;
 }
 
+img.displayed {
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+
+  }
   table
   {
     table-layout:fixed;
     width:800px;
+  }
+
+  table.center {
+    margin-left:auto;
+    margin-right:auto;
   }
 
 p
@@ -84,7 +109,7 @@ path:hover {
      <a id="home-page-logo_desktop" aria-hidden="true" href="/"
 title="Home" rel="home" id="logo"><img
 
- src="icons/logo.svg" style="width:150px" alt="Volpe the National Transportation Systems Center."></img></a>
+ class = "displayed" src="icons/logo.svg" style="height:50px;padding: 0px 0px 0px 5px" alt="Volpe the National Transportation Systems Center."></img></a>
 
  </header>
 
@@ -132,7 +157,7 @@ title="Home" rel="home" id="logo"><img
 </head>
 <body>
 <p>
-<table>
+<table class="center">
     <tbody>
     <tr>
       <td><p><img src="icons/usfs.png" alt="USFS logo" style="float:left;width:42px;height:42px;padding: 0px 40px 10px 0px;"></p><p style="padding: 10px 0px 0px 0px;">U.S. Forest Service</p><p id="map" style="height:300px"></p></td>

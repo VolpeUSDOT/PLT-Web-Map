@@ -32,7 +32,7 @@ var reg_num
       reg_num = "6";
       break;
 
-    case "Alaska Region":
+    case "Alaska":
       reg_num = "7";
       break;
 
@@ -71,7 +71,7 @@ var FO_city
       FO_city = "Lakewood, CO";
       break;
 
-    case "Alaska Region":
+    case "Alaska":
       FO_city = "Anchorage, AK";
       break;
 
