@@ -19,7 +19,12 @@ header {
 
 
 
-
+p#intro{
+  font-size: 14px;
+  font-family: Arial;
+  font-weight: normal;
+  color: #555;
+}
 
 #map {
   width: 360px;
@@ -73,7 +78,8 @@ p
 {
    font-size: 20px;
    font-family: Arial;
-  font-weight:bold
+  font-weight:bold;
+    color: #555;
 }
 
 
@@ -144,9 +150,14 @@ title="Home" rel="home" id="logo"><img
 
 </head>
 <body>
+
 <p>
 <table class="center">
     <tbody>
+    <tr>
+      <td colspan="2"><p id="intro">
+          The Volpe Center developed this map to help its staff as well as partners work across agencies and understand the relevant regional context and contacts for collaborative, multi-agency work. Source code available at <a href="https://volpeusdot.github.io/PLT-Web-Map/">https://volpeusdot.github.io/PLT-Web-Map/</a>. <b>Pan the map to see more U.S. states and territories.</b>
+        </p></td>
     <tr>
       <td><p><img src="icons/usfs.png" alt="USFS logo" style="float:left;width:42px;height:42px;padding: 0px 40px 10px 0px;"></p><p style="padding: 10px 0px 0px 0px;">U.S. Forest Service</p><p id="map" style="height:300px"></p></td>
     <td><p><img src="icons/fws.png" alt="FWS logo" style="float:left;width:38px;height:42px;padding: 0px 30px 10px 0px;"></p><p style="padding: 10px 0px 0px 0px;">U.S. Fish and Wildlife Service</p><p id="map2" style="height:300px"></p></td>
